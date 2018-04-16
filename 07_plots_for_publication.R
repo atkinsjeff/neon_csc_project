@@ -72,7 +72,7 @@ y <- high$fPAR_mean
 x <- high$rugosity_mean
 rc.model <- nls(y ~ a / (1 + b * exp(-k * x)), start = list(a = 0.1, b = 1, k = 0.1))
 AIC(rc.model)
-summary(rc.model)
+overview(rc.model)
 
 #coefficients
 a <- coef(rc.model)[1] 
@@ -86,7 +86,7 @@ y <- low$fPAR_mean
 x <- low$rugosity_mean
 rc.low.model <- nls(y ~ (a * x) / (b + x), start = list(a = 1, b = 1))
 AIC(rc.low.model)
-
+overview(rc.low.model)
 #coefficients
 a <- coef(rc.low.model)[1] 
 b <- coef(rc.low.model)[2]
@@ -125,6 +125,7 @@ RSS <- sum(residuals(rt.model)^2)
 TSS <- sum((y - mean(y))^2)
 R.square <- 1 - (RSS/TSS)
 print(R.square)
+summary(rt.model)
 
 rt.fit <- function(x) 
 
@@ -160,7 +161,7 @@ c <- coef(pc.model)[3]
 pc.high.fit <- function(x) ifelse(x >= 0.5 & x <= 0.9, 1.622 + ((0.5214 * x) / (-1.2482 + x)), NA )
 
 AIC(pc.model)
-summary(pc.model)
+overview(pc.model)
 
 # Canopy Porosity under  low light
 y <- low$fPAR_mean
@@ -168,7 +169,7 @@ x <- low$porosity_mean
 pc.low.model <-nls(y ~ a * (x^b), start = list(a = 1, b = 1))
 
 AIC(pc.low.model)
-summary(pc.low.model)
+overview(pc.low.model)
 
 #coefficients
 a <- coef(pc.low.model)[1] 
@@ -203,6 +204,7 @@ x <- high$rumple_mean
 
 rump.model <-nls(y ~ (1 / (1 + exp(-a * (x - b)))), start = list(a = 0.1, b = 1))
 AIC(rump.model)
+overview(rump.model)
 
 #coefficients
 a <- coef(rump.model)[1] 
@@ -235,6 +237,7 @@ x <- high$mean.vai_mean
 
 vai.model <-nls(y ~ (1 / (1 + exp(-a * (x - b)))), start = list(a = 0.1, b = 1))
 AIC(vai.model)
+overview(vai.model)
 
 #coefficients
 a <- coef(vai.model)[1] 
@@ -249,6 +252,7 @@ x <- low$mean.vai_mean
 
 vai.low.model <- nls(y ~ (1 / (1 + exp(-a * (x - b)))), start = list(a = 0.5, b = 0.5))
 AIC(vai.low.model)
+overview(vai.low.model)
 
 #coefficients
 c <- coef(vai.low.model)[1] 
@@ -281,7 +285,7 @@ x <- high$mean.max.ht_mean
 moch.model <-nls(y ~ a / (1 + b * exp(-k * x)), start = list(a = 1, b = 10, k = 0.1))
 
 AIC(moch.model)
-
+overview(moch.model)
 #coefficients
 a <- coef(moch.model)[1] 
 b <- coef(moch.model)[2]
@@ -314,6 +318,7 @@ x <- high$deep.gap.fraction_mean
 #dg.model <-nls(y ~ a / (1 + b * exp(-k * x)), start = list(a = -6, b = 0.1, k = -1))
 dg.model <- nls(y ~ a + ((b * x) / (c + x)), start = list( a = 0.1, b = 1, c =  1) )
 AIC(dg.model)
+overview(dg.model)
 
 #coefficients
 a <- coef(dg.model)[1] 
@@ -379,6 +384,7 @@ x <- high$clumping.index_mean
 
 ci.model <- nls(y ~ (a + ((b * x) / (c + x))), start = list( a = -1, b = 0.1, c =  -1))
 AIC(ci.model)
+overview(ci.model)
 
 #coefficients
 a <- coef(ci.model)[1] 
@@ -394,7 +400,7 @@ x <- low$clumping.index_mean
 ci.low.model <- nls(y ~ (1 / (1 + exp(-a * (x - b)))), start = list(a = -1, b = 1))
 
 AIC(ci.low.model)
-summary(ci.low.model)
+overview(ci.low.model)
 
 #coefficients
 d <- coef(ci.low.model)[1] 
@@ -449,7 +455,9 @@ x <- master.site$rugosity_mean
 
 
 m.rc.site<- nls(y ~ (a * x) / (b + x), start = list(a = 1, b = 1))
-summary(m.rc.site)
+
+#model stats
+overview(m.rc.site)
 AIC(m.rc.site)
 
 fit.rc.site <- function(x) {(1.08604 * x) / (3.43236 + x)}
@@ -486,7 +494,7 @@ site.rt <- ggplot(master.site, aes(x = top.rugosity_mean, y = fPAR_mean))+
      ylab(fpar.label)
 
 # Porosity
-summary(lm(master.site$fPAR_mean ~ master.site$porosity_mean))
+summary(lm(master.site$fPAR ~ master.site$porosity_mean))
 
 x11(width = 4, height = 4)
 site.pc <- ggplot(master.site, aes(x = porosity_mean, y = fPAR_mean))+
@@ -510,7 +518,7 @@ x <- master.site$rumple_mean
 
 
 m.rump.site<- nls(y ~ 1 / (1 + exp(a * (x - b))), start = list(a = 0.1, b = 1))
-summary(m.rump.site)
+overview(m.rump.site)
 AIC(m.rump.site)
 
 x11(width = 4, height = 4)
@@ -541,7 +549,7 @@ x <- master.site$mean.vai_mean
 
 #m.vai.site <-nls(y ~ (1 / (1 + exp(-a * (x - b)))), start = list(a = 0.1, b = 1))
 m.vai.site <- nls(y ~ a / (1 + b * exp(-k * x)), start = list(a = 1, b =1, k = 0.1) )
-summary(m.vai.site)
+overview(m.vai.site)
 AIC(m.vai.site)
 
 #coefficients
@@ -576,6 +584,9 @@ x <- master.site$mean.max.ht_mean
 # 
 site.moch.model <-nls(y ~ a + (b * log(x)), start = list(a = -1, b = 1))
 
+overview(site.moch.model)
+AIC(site.moch.model)
+
 #coefficients
 a <- coef(site.moch.model)[1] 
 b <- coef(site.moch.model)[2]
@@ -599,6 +610,8 @@ site.moch <- ggplot(master.site, aes(x = mean.max.ht_mean , y = fPAR_mean))+
 
 ##################################
 # Deep Gap Fraction. 
+summary(lm(master.site$fPAR_mean ~ master.site$deep.gap.fraction_mean))
+
 x11(width = 4, height = 4)
 
 site.dg <- ggplot(master.site, aes(x = deep.gap.fraction_mean, y = fPAR_mean))+
@@ -613,7 +626,7 @@ site.dg <- ggplot(master.site, aes(x = deep.gap.fraction_mean, y = fPAR_mean))+
 
 # Gap Fraction/Sky Fraction
 x11(width = 4, height = 4)
-summary(lm(master.site$fPAR_mean ~ master.site$cover.fraction_mean))
+summary(lm(master.site$fPAR_mean ~ master.site$sky.fraction_mean))
 
 site.gf <- ggplot(master.site, aes(x = sky.fraction_mean / 100, y = fPAR_mean))+
      geom_point(size = 2)+

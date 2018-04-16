@@ -4,7 +4,7 @@ require(ggplot2)
 
 
 # custom plot theme
-theme_new <- function(base_size = 12){
+theme_new2 <- function(base_size = 12){
   theme_bw(base_size = base_size) %+replace%
     theme(
       #line = element_line(colour="black"),
@@ -16,7 +16,7 @@ theme_new <- function(base_size = 12){
       panel.border = element_blank(),
       panel.background = element_rect(fill = "white", colour = "white"), 
       strip.background = element_rect(fill = NA),
-      axis.text = element_text( size = 14),
+      axis.text = element_text( size = 12),
       axis.title  = element_text( size = 16, margin = margin(12, unit = "cm")),
       legend.title=element_blank()
     )
@@ -37,88 +37,103 @@ plot.means
 
 
 # mean leaf height
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = mean.height_mean)) +
   geom_boxplot()+
   theme_classic()+
+  theme(axis.text = element_text( size = 12),
+  axis.title  = element_text( size = 16))+
   xlab("")+
-  ylab("Mean Leaf Height (m)")
+  ylab("H (m)")
 
 # mean outer canopy height
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = mean.max.ht_mean)) +
   geom_boxplot()+
   theme_classic()+
-  xlab("")+
-  ylab("Mean Outer Canopy Height (m)")
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
+    xlab("")+
+  ylab("MOCH (m)")
 
 # canopy porosity
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = porosity_mean)) +
   geom_boxplot()+
   theme_classic()+
-  xlab("")+
-  ylab("Canopy Porosity")
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
+    xlab("")+
+  ylab(expression("P"[C]))
 
 # clumping index
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = clumping.index_mean)) +
   geom_boxplot()+
   theme_classic()+
   ylim(0.7, 1)+
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
   xlab("")+
-  ylab("Clumping Index")
+  ylab(expression(Omega))
 
 # canopy rugosity
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = rugosity_mean)) +
   geom_boxplot()+
   theme_classic()+
-  # ylim(0.7, 1)+
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
   xlab("")+
-  ylab("Canopy Rugosity")
+  ylab(expression("R"[C]))
 
 # Top rugosity
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = top.rugosity_mean)) +
   geom_boxplot()+
   theme_classic()+
-  # ylim(0.7, 1)+
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
   xlab("")+
-  ylab("Top Rugosity")
+  ylab(expression("R"[T]))
 
 # Rumple
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = rumple_mean)) +
   geom_boxplot()+
   theme_classic()+
-  # ylim(0.7, 1)+
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
   xlab("")+
   ylab("Rumple")
 
 # Deep Gap Fraction
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = deep.gap.fraction_mean)) +
   geom_boxplot()+
   theme_classic()+
-  # ylim(0.7, 1)+
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
   xlab("")+
-  ylab("Deep Gap Fraction")
+  ylab("DGF")
 
 # Gap Fraction
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = sky.fraction_mean)) +
   geom_boxplot()+
   theme_classic()+
-  # ylim(0.7, 1)+
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
   xlab("")+
-  ylab("Gap Fraction")
+  ylab(expression(Theta))
 
 # Mean VAI
-x11(width = 6, height = 3)
+x11(width = 7, height = 3)
 ggplot(plot.means, aes(x = siteID, y = mean.vai_mean)) +
   geom_boxplot()+
   theme_classic()+
+  theme(axis.text = element_text( size = 12),
+        axis.title  = element_text( size = 16))+
   # ylim(0.7, 1)+
   xlab("")+
   ylab("VAI")
@@ -127,11 +142,12 @@ ggplot(plot.means, aes(x = siteID, y = mean.vai_mean)) +
   ### fpar
   plot.w.light <- read.csv("./data/laserquest_plot_means_fpar_csc.csv")
   
-  x11(width = 6, height = 3)
-  ggplot(plot.w.light, aes(x = siteID, y = mean)) +
+  x11(width = 7, height = 3)
+  ggplot(plot.w.light, aes(x = siteID, y = fPAR_mean)) +
     geom_boxplot()+
     theme_classic()+
-    # ylim(0.7, 1)+
+    theme(axis.text = element_text( size = 12),
+    axis.title  = element_text( size = 16))+
     xlab("")+
     ylab("fPAR")
 

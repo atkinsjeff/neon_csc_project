@@ -60,34 +60,33 @@ m.rugosity <- nls(y ~ a / (1 + b * exp(-k * x)), start = list(a = 0.08, b = -0.9
 summary(m.rugosity)
 
 
-RSS <- sum(residuals(m.rugosity)^2)
-TSS <- sum((y - mean(y))^2)
-R.square <- 1 - (RSS/TSS)
-print(R.square)
+# RSS <- sum(residuals(m.rugosity)^2)
+# TSS <- sum((y - mean(y))^2)
+# R.square <- 1 - (RSS/TSS)
+# print(R.square)
 AIC(m.rugosity)
+overview(m.rugosity)
+
+
+
+##### Top Rugosity
+# 2
+x <- high$top.rugosity_mean
+# m.top <- nls(y ~ a * (x^b), start = list(a = 1, b = 1))
+m.lm.top <- lm(y ~ x)
+
+# summary(m.top)
+summary(m.lm.top)
+
 
 # plot w/ coefficents
+x11()# plot w/ coefficents
 x11()
 plot(x, y, xlab = "Canopy Rugosity (m)", ylab = "fPAR")
 a <- coef(m.rugosity)[1]
 b <- coef(m.rugosity)[2]
 k <- coef(m.rugosity)[3]
 curve( (a / (1 + (b * exp(-k * x)))), col = "blue", add = TRUE)
-
-##### Top Rugosity
-# 2
-m.top <- nls(y ~ a * (x^b), start = list(a = 1, b = 1))
-
-summary(m.top)
-
-
-RSS <- sum(residuals(m.rugosity2)^2)
-TSS <- sum((y - mean(y))^2)
-R.square <- 1 - (RSS/TSS)
-print(R.square)
-
-# plot w/ coefficents
-x11()
 plot(x, y, xlab = "Canopy Rugosity (m)", ylab = "fPAR")
 a <- coef(m.direct)[1]
 b <- coef(m.direct)[2]
